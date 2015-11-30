@@ -9,7 +9,7 @@
             android:layout_height="match_parent"
             android:layout_width="0dip"
             android:layout_weight="1"
-            android:src="@drawable/switchuser"
+            android:src="@drawable/switch_user"
             android:id="@+id/ib_switchuser"
             android:layout_marginLeft="50dp"/>
 
@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:layout_width="0dip"
             android:layout_weight="1"
-            android:src="@drawable/setting"
+            android:src="@drawable/setting_time"
             android:id="@+id/ib_setting"
             android:layout_marginLeft="50dp"/>
 
@@ -28,7 +28,7 @@
             android:layout_height="match_parent"
             android:layout_width="0dip"
             android:layout_weight="1"
-            android:src="@drawable/exit"
+            android:src="@drawable/exit_app"
             android:id="@+id/ib_exit"
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"/>

@@ -129,6 +129,7 @@ public class AutoMonitorService extends Service {
                 if (mSystemDataUtils.isTimeNmow(mTelevision)) {
                     HistoryRecord historyRecord = new HistoryRecord();
                     historyRecord.setTelevisionId(mTelevision);
+                    historyRecord.setInformation(mSystemDataUtils.getAppName());
                     mServerDatabaseUtils.screenShot(historyRecord);
                 }
                 try {
@@ -150,12 +151,13 @@ public class AutoMonitorService extends Service {
             public void onConnectCompleted() {
                 if (mRealTimeRecordListener.isConnected()) {//连接成功则开始监听
                     mRealTimeRecordListener.subRowUpdate("RealTimeRecord", mRealTimeRecord.getObjectId());
+                    Log.d("cateye", "record start:" + mRealTimeRecord.getObjectId());
                 }
             }
 
             @Override
             public void onDataChange(JSONObject jsonObject) {
-                Log.e("cateye", "real time: find the change");
+                Log.e("cateye", "record: find the change:" + jsonObject.toString());
                 mRealTimeRecordListener.unsubRowUpdate("RealTimeRecord", mRealTimeRecord.getObjectId());//先接触监听再更新，防止更新触发监听
                 if (BmobRealTimeData.ACTION_UPDATEROW.equals(jsonObject.optString("action"))) {
                     JSONObject data = jsonObject.optJSONObject("data");
@@ -176,11 +178,14 @@ public class AutoMonitorService extends Service {
             public void onConnectCompleted() {
                 if (mRealTimeMessageListener.isConnected()) {
                     mRealTimeMessageListener.subRowUpdate("RealTimeMessage", mRealTimeMessage.getObjectId());
+                    Log.d("cateye", "message start:" + mRealTimeMessage.getObjectId());
                 }
             }
 
             @Override
             public void onDataChange(JSONObject jsonObject) {
+                Log.e("cateye", "message: find the change:" + jsonObject.toString());
+
                 mRealTimeMessageListener.unsubRowUpdate("RealTimeMessage", mRealTimeMessage.getObjectId());
                 if (BmobRealTimeData.ACTION_UPDATEROW.equals(jsonObject.optString("action"))) {
                     JSONObject data = jsonObject.optJSONObject("data");
@@ -188,7 +193,7 @@ public class AutoMonitorService extends Service {
                     mRealTimeMessage.setIsRequest(!data.optBoolean("isRequest"));
                     mServerDatabaseUtils.updateRealTimeMessage(mRealTimeMessage);
 
-                    Log.e("cateye", "message:" + mRealTimeMessage.getMessage());
+
                     showFloatWindow();//显示消息框
                 }
             }
@@ -206,9 +211,9 @@ public class AutoMonitorService extends Service {
         mLayoutParams.gravity = Gravity.END | Gravity.BOTTOM;
         mLayoutParams.width = 250;
         mLayoutParams.height = 200;
-        Log.e("cateye","windowManager:"+mWindowManager);
+        Log.e("cateye", "windowManager:" + mWindowManager);
         mFloatWindowLayout = new FloatWindowLayout(this);
-        Log.e("cateye","layout create");
+        Log.e("cateye", "layout create");
         mFloatWindowLayout.setMessage(mRealTimeMessage.getMessage());
         mWindowManager.addView(mFloatWindowLayout, mLayoutParams);
         Log.e("cateye", "view add");

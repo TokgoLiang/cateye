@@ -182,6 +182,7 @@ public class ServerDatabaseUtils {
 
                         String iconPath = mSystemDataUtils.getAppIcon();
                         uploadAppIcon(historyRecord, iconPath);
+                        //saveHistoryRecord(historyRecord);
                     }
 
                     @Override

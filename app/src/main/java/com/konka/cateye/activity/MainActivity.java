@@ -137,7 +137,7 @@ public class MainActivity extends Activity {
                     break;
                 //已绑定状态
                 case StaticFinal.BOUNDED:
-                    //开启监听
+                    //开启监控
                     initTelevision();
                     TVListenerUtils.stopListen();
                     //显示已绑定界面

@@ -126,7 +126,7 @@ public class TVListenerUtils {
      * */
     private static void listen(final Context context, final Handler handler){
         //监听TV表绑定事件
-        Log.d("TAG","监听前"+objectId);
+        Log.d("TAG","监听tv is:"+objectId);
         rtdTV = new BmobRealTimeData();
         rtdTV.start(context, new ValueEventListener() {
             @Override

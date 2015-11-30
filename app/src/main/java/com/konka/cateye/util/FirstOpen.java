@@ -94,6 +94,7 @@ public class FirstOpen {
             @Override
             public void onSuccess(List<Television> list) {
                 Television television = list.get(0);
+                Log.d("TAG","tv is"+television.getObjectId());
                 initrealtimetable(context, television, handler);
             }
 
@@ -123,6 +124,7 @@ public class FirstOpen {
                 realTimeMessage.save(context, new SaveListener() {
                     @Override
                     public void onSuccess() {
+                        Log.d("TAG","message and record  save success");
                         Message msg = new Message();
                         msg.what = StaticFinal.UNBOUNDED;
                         handler.sendMessage(msg);

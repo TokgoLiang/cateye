@@ -92,7 +92,6 @@ public class FirstOpen {
     private static void updateOnOrOff(final Context context,Television television){
         BmobQuery<OnOrOff> query = new BmobQuery<>();
         query.addWhereEqualTo("televisionId",television);
-        //Log.d("TAG","tv is"+television.getObjectId());
         query.findObjects(context, new FindListener<OnOrOff>() {
             @Override
             public void onSuccess(List<OnOrOff> list) {

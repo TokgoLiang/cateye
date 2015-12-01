@@ -21,7 +21,6 @@ public class BootReceiver extends BroadcastReceiver {
             Log.d("cateye","on!!!");
             Intent start = new Intent(context, AutoRunService.class);
             context.startService(start);
-
         }
     }
 }

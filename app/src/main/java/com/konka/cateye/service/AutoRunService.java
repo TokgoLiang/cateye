@@ -83,7 +83,23 @@ public class AutoRunService extends Service {
             public void onSuccess(List<OnOrOff> list) {
                 mOnOrOff = list.get(0);
                 Log.d("cateye", "OOO is:" + mOnOrOff.getObjectId());
-                listen();
+                if(mOnOrOff.getState()){
+                    mOnOrOff.setState(false);
+                    mOnOrOff.update(AutoRunService.this, new UpdateListener() {
+                        @Override
+                        public void onSuccess() {
+                            Log.d("cateye","恢复ooo");
+                            listen();
+                        }
+
+                        @Override
+                        public void onFailure(int i, String s) {
+
+                        }
+                    });
+                }else {
+                    listen();
+                }
             }
 
             @Override

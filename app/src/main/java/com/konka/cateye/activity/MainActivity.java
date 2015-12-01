@@ -33,6 +33,7 @@ import com.konka.cateye.bean.RealTimeRecord;
 import com.konka.cateye.bean.Television;
 import com.konka.cateye.bean.User;
 import com.konka.cateye.service.AutoMonitorService;
+import com.konka.cateye.service.AutoRunService;
 import com.konka.cateye.util.ExitApplication;
 import com.konka.cateye.util.FirstOpen;
 import com.konka.cateye.util.MonitorTimeUtils;

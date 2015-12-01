@@ -91,7 +91,7 @@ public class FirstOpen {
 
     private static void updateOnOrOff(final Context context,Television television){
         BmobQuery<OnOrOff> query = new BmobQuery<>();
-        query.addWhereEqualTo("televisionId",television);
+        query.addWhereEqualTo("televisionId", television);
         query.findObjects(context, new FindListener<OnOrOff>() {
             @Override
             public void onSuccess(List<OnOrOff> list) {
@@ -191,6 +191,8 @@ public class FirstOpen {
         onOrOff.save(context, new SaveListener() {
             @Override
             public void onSuccess() {
+                Intent intent = new Intent(context,AutoRunService.class);
+                context.startService(intent);
                 Log.d("TAG", "on or off save success");
             }
 

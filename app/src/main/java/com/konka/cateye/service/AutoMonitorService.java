@@ -222,6 +222,7 @@ public class AutoMonitorService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.e("cateye", "monitor service start");
         mSystemDataUtils = new SystemDataUtils(this);
         mServiceHandler = new ServiceHandler();
         mServerDatabaseUtils = new ServerDatabaseUtils(this, mServiceHandler);
@@ -232,6 +233,7 @@ public class AutoMonitorService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
+        Log.e("cateye", "monitor service bind");
         return mAutoMonitorBinder;
     }
 
@@ -241,7 +243,7 @@ public class AutoMonitorService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.e("cateye", "service destroy");
+        Log.e("cateye", "monitor service destroy");
         mIsRunning = false;
         mExecutorService.shutdown();
         mRealTimeRecordListener.unsubRowUpdate("RealTimeRecord", mRealTimeRecord.getObjectId());

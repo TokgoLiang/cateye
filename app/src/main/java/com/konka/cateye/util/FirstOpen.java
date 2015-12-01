@@ -1,6 +1,7 @@
 package com.konka.cateye.util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Handler;
@@ -10,10 +11,12 @@ import android.widget.Toast;
 
 import com.google.zxing.WriterException;
 import com.konka.cateye.StaticFinal;
+import com.konka.cateye.bean.OnOrOff;
 import com.konka.cateye.bean.RealTimeMessage;
 import com.konka.cateye.bean.RealTimeRecord;
 import com.konka.cateye.bean.Television;
 import com.konka.cateye.bean.User;
+import com.konka.cateye.service.AutoRunService;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -26,6 +29,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.GetListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * 处理第一次启动相关操作
@@ -74,6 +78,7 @@ public class FirstOpen {
                     Message msg = new Message();
                     msg.what = StaticFinal.BOUNDED;
                     handler.sendMessage(msg);
+                    updateOnOrOff(context, list.get(0));
                 }
             }
 
@@ -83,6 +88,39 @@ public class FirstOpen {
             }
         });
     }
+
+    private static void updateOnOrOff(final Context context,Television television){
+        BmobQuery<OnOrOff> query = new BmobQuery<>();
+        query.addWhereEqualTo("televisionId",television);
+        //Log.d("TAG","tv is"+television.getObjectId());
+        query.findObjects(context, new FindListener<OnOrOff>() {
+            @Override
+            public void onSuccess(List<OnOrOff> list) {
+                OnOrOff onOrOff = list.get(0);
+                onOrOff.setState(true);
+                //onOrOff.setIsRequest(!onOrOff.getIsRequest());
+                AutoRunService.stopListen();
+                onOrOff.update(context, new UpdateListener() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d("TAG","on or off update true success");
+                        AutoRunService.startListen();
+                    }
+
+                    @Override
+                    public void onFailure(int i, String s) {
+                        Log.d("TAG","update on or off failed"+s);
+                    }
+                });
+            }
+
+            @Override
+            public void onError(int i, String s) {
+
+            }
+        });
+    }
+
 
     /**
      * 获取到电视对象，然后创建实时表
@@ -111,7 +149,7 @@ public class FirstOpen {
      *
      * @param context 上下文
      */
-    public static void initrealtimetable(final Context context, final Television television, final Handler handler) {
+    private static void initrealtimetable(final Context context, final Television television, final Handler handler) {
         RealTimeRecord realTimeRecord = new RealTimeRecord();
         realTimeRecord.setTelevisionId(television);
         realTimeRecord.setIsRequest(false);
@@ -124,10 +162,11 @@ public class FirstOpen {
                 realTimeMessage.save(context, new SaveListener() {
                     @Override
                     public void onSuccess() {
-                        Log.d("TAG","message and record  save success");
+                        Log.d("TAG", "message and record  save success");
                         Message msg = new Message();
                         msg.what = StaticFinal.UNBOUNDED;
                         handler.sendMessage(msg);
+                        createOnOrOffTable(context,television);
                     }
 
                     @Override
@@ -135,6 +174,25 @@ public class FirstOpen {
 
                     }
                 });
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+
+            }
+        });
+    }
+
+
+    private static void createOnOrOffTable(final Context context, final Television television){
+        OnOrOff onOrOff = new OnOrOff();
+        onOrOff.setTelevisionId(television);
+        onOrOff.setState(true);
+        onOrOff.setIsRequest(false);
+        onOrOff.save(context, new SaveListener() {
+            @Override
+            public void onSuccess() {
+                Log.d("TAG", "on or off save success");
             }
 
             @Override

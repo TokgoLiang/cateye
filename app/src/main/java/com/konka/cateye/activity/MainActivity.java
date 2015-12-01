@@ -214,7 +214,7 @@ public class MainActivity extends Activity {
                                     Intent intent = new Intent(MainActivity.this, AutoMonitorService.class);
                                     stopService(intent);
                                     //关闭所有Activity
-                                    ExitApplication.getInstance().exit();
+                                    ExitApplication.getInstance().exit(MainActivity.this,mTelevision);
                                     break;
                                 //设置监控时间段
                                 case StaticFinal.GOTO_SETTING:
@@ -391,7 +391,7 @@ public class MainActivity extends Activity {
      */
     @Override
     protected void onDestroy() {
-        Log.d("TAG", "on destroy");
+        Log.d("TAG", "main activity on destroy");
         super.onDestroy();
         if (mIsBind)
             unbindService(mServiceConnection);
@@ -423,17 +423,5 @@ public class MainActivity extends Activity {
         builder.show();
     }
 
-
-/*    public void onClick1(View view) {
-        User user = new User();
-        user.setObjectId("111111");
-        user.setRealPassword("123");
-        user.setTableName("123");
-
-        Television television = new Television();
-        television.setUserId(user);
-
-        television.update(MainActivity.this, "99c5f47d74", null);
-    }*/
 
 }

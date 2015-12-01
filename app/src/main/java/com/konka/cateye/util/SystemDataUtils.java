@@ -127,7 +127,7 @@ public final class SystemDataUtils {
             }
             mac_s = stringBuilder.toString();
         }
-        Log.e("cateye", "mac is:" + mac_s);
+        //Log.e("cateye", "mac is:" + mac_s);
         return mac_s;
     }
 

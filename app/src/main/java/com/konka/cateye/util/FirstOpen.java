@@ -36,6 +36,8 @@ import cn.bmob.v3.listener.UpdateListener;
  */
 public class FirstOpen {
 
+    public static boolean isPhoneCall = false;
+
     /**
      * 判断是否第一次启动
      * 从数据库判断
@@ -90,6 +92,11 @@ public class FirstOpen {
     }
 
     private static void updateOnOrOff(final Context context,Television television){
+        if(isPhoneCall){
+            isPhoneCall = false;
+            return;
+        }
+
         BmobQuery<OnOrOff> query = new BmobQuery<>();
         query.addWhereEqualTo("televisionId", television);
         query.findObjects(context, new FindListener<OnOrOff>() {

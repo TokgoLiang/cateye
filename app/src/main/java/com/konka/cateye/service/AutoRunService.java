@@ -13,6 +13,7 @@ import com.konka.cateye.bean.MonitorTime;
 import com.konka.cateye.bean.OnOrOff;
 import com.konka.cateye.bean.Television;
 import com.konka.cateye.util.ExitApplication;
+import com.konka.cateye.util.FirstOpen;
 import com.konka.cateye.util.SystemDataUtils;
 
 import org.json.JSONException;
@@ -150,6 +151,7 @@ public class AutoRunService extends Service implements Runnable {
                 } else {
                     Log.d("cateye", "open");
                     updateOnOrOff(true);
+                    FirstOpen.isPhoneCall = true;
                     Intent intent = new Intent(AutoRunService.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);

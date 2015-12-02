@@ -52,13 +52,33 @@ public class MonitorTimesAdapter extends BaseAdapter {
         }
         MonitorTime monitorTime = monitorTimes.get(position);
         TextView beginHour = (TextView) view.findViewById(R.id.tv_beginTime_hour);
-        beginHour.setText(monitorTime.getBeginHour()+"");
+        if(monitorTime.getBeginHour() < 10) {
+            beginHour.setText("0"+monitorTime.getBeginHour());
+        }else {
+            beginHour.setText(""+monitorTime.getBeginHour());
+        }
+
         TextView beginMinute = (TextView) view.findViewById(R.id.tv_beginTime_minute);
-        beginMinute.setText(monitorTime.getEndMinute()+"");
+        if(monitorTime.getBeginMinute() < 10) {
+            beginMinute.setText("0"+monitorTime.getBeginMinute());
+        }else {
+            beginMinute.setText(""+monitorTime.getBeginMinute());
+        }
+
         TextView endHour = (TextView) view.findViewById(R.id.tv_endTime_hour);
-        endHour.setText(monitorTime.getEndHour()+"");
+        if(monitorTime.getEndHour() < 10) {
+            endHour.setText("0"+monitorTime.getEndHour());
+        }else {
+            endHour.setText(""+monitorTime.getEndHour());
+        }
+
         TextView endMinute = (TextView) view.findViewById(R.id.tv_endTime_minute);
-        endMinute.setText(monitorTime.getEndMinute()+"");
+        if(monitorTime.getEndMinute() < 10) {
+            endMinute.setText("0"+monitorTime.getEndMinute());
+        }else {
+            endMinute.setText(""+monitorTime.getEndMinute());
+        }
+
         return view;
     }
 }

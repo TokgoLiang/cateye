@@ -1,57 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_tv_beginTime"
-        android:text="起始时间"
-        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:text="设置监控时间段"
+        android:textSize="22dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
     <LinearLayout
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
+
         <EditText
-            android:id="@+id/et_beginTime_hour"
-            android:layout_weight="1"
+            android:id="@+id/et_beginTime_hour0"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:inputType="number"
-            android:text="0"/>
+            android:text="0"
+            android:maxLength="1"
+            android:gravity="center"/>
+
         <EditText
-            android:id="@+id/et_beginTime_minute"
-            android:layout_weight="1"
+            android:id="@+id/et_beginTime_hour1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:inputType="number"
-            android:text="0" />
+            android:text="0"
+            android:gravity="center"
+            android:maxLength="1"/>
+
+        <TextView
+            android:text=" : "
+            android:textSize="30sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_beginTime_minute0"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:text="0"
+            android:maxLength="1"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/et_beginTime_minute1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:text="0"
+            android:maxLength="1"
+            android:gravity="center" />
+
+        <TextView
+            android:text=" - "
+            android:textSize="30sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_endTime_hour0"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:text="0"
+            android:maxLength="1"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/et_endTime_hour1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:text="0"
+            android:gravity="center"
+            android:maxLength="1" />
+
+        <TextView
+            android:text=" : "
+            android:textSize="30sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_endTime_minute0"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:text="0"
+            android:maxLength="1"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/et_endTime_minute1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:text="0"
+            android:maxLength="1"
+            android:gravity="center" />
+
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_tv_endTime"
-        android:text="结束时间"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <EditText
-            android:id="@+id/et_endTime_hour"
-            android:layout_weight="1"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/bt_delete"
+            android:text="删除"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:inputType="number"
-            android:text="0" />
-        <EditText
-            android:id="@+id/et_endTime_minute"
-            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_marginLeft="50dp"
+            android:id="@+id/bt_update"
+            android:text="修改"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:inputType="number"
-            android:text="0" />
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 </LinearLayout>

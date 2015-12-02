@@ -26,6 +26,13 @@ public class StaticFinal {
     public static final int EXIT = 10;
     public static final int GOTO_SETTING= 11;
 
+    public static final int CHANGE_TO_BLACK =  20;
+    public static final int CHANGE_TO_WHITE =  21;
+    public static final int CHANGE_INDEX =  22;
+
+    public static final int TYPE_ADD = 23;
+    public static final int TYPE_UPDATE = 24;
+
     //应用APPID
     public static final String APPID3 = "e60063a62dd76ed0f8346cb3eae41d71";                         //赵启亮的APPID
     public static final String APPID2 = "6bbb89920bb59a24bff31e1ea2991637";                         //陈景灏的APPID

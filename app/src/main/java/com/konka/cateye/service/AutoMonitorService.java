@@ -38,7 +38,6 @@ import cn.bmob.v3.BmobRealTimeData;
 import cn.bmob.v3.listener.ValueEventListener;
 
 public class AutoMonitorService extends Service {
-    private static final int THREAD_NUMBER = 10;
     private static final int TIME_INTERVAL_OF_MINUTE = 15;
 
     private RealTimeRecord mRealTimeRecord = null;
@@ -226,7 +225,7 @@ public class AutoMonitorService extends Service {
         mSystemDataUtils = new SystemDataUtils(this);
         mServiceHandler = new ServiceHandler();
         mServerDatabaseUtils = new ServerDatabaseUtils(this, mServiceHandler);
-        mExecutorService = Executors.newFixedThreadPool(THREAD_NUMBER);
+        mExecutorService = Executors.newCachedThreadPool();
         return super.onStartCommand(intent, flags, startId);
     }
 

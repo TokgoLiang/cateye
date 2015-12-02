@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.Message;
 import android.util.Log;
 
 import com.konka.cateye.activity.MainActivity;
@@ -16,7 +17,12 @@ import com.konka.cateye.util.SystemDataUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobRealTimeData;
@@ -24,10 +30,11 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.ValueEventListener;
 
-public class AutoRunService extends Service {
+public class AutoRunService extends Service implements Runnable{
     private static Television mTelevision;
     private static OnOrOff mOnOrOff;
     private static BmobRealTimeData mOnOrOffListener;
+    private static ExecutorService mExecutorService;
 
     public AutoRunService() {
     }
@@ -65,6 +72,7 @@ public class AutoRunService extends Service {
                     mTelevision = list.get(0);
                     Log.d("cateye", "tv is:" + mTelevision.getObjectId());
                     findOnOrOff();
+                    mExecutorService.submit(AutoRunService.this);
                 }
             }
 
@@ -135,7 +143,7 @@ public class AutoRunService extends Service {
                     updateOnOrOff(false);
                     Intent intent = new Intent(AutoRunService.this, AutoMonitorService.class);
                     stopService(intent);
-                    ExitApplication.getInstance().exit(AutoRunService.this,mTelevision);
+                    ExitApplication.getInstance().exit(AutoRunService.this, mTelevision);
                 } else {
                     Log.d("cateye", "open");
                     updateOnOrOff(true);
@@ -164,10 +172,24 @@ public class AutoRunService extends Service {
         });
     }
 
+    private Date getDate(){
+        //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE,-7);
+        Date date = calendar.getTime();
+        return date;
+    }
+
+    @Override
+    public void run() {
+
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("cateye","run service on destroy");
         findTelevision();
+        mExecutorService = Executors.newCachedThreadPool();
         return super.onStartCommand(intent, flags, startId);
     }
 

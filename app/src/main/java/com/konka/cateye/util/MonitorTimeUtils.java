@@ -47,26 +47,33 @@ public class MonitorTimeUtils {
     /**
      * 从view获取监控时间段，并封装成MonitorTime类型对象
      * */
-    public static  MonitorTime viewToMonitorTime (Context context,final View monitortimeLayout) {
+    public static  MonitorTime viewToMonitorTime (final View monitortimeLayout) {
         Log.d("TAG","viewToMonitorTime");
 
-        final EditText et_beginTime_hour = (EditText) monitortimeLayout.findViewById(R.id.et_beginTime_hour);
-        final EditText et_beginTime_minute = (EditText) monitortimeLayout.findViewById(R.id.et_beginTime_minute);
-        final EditText et_endTime_hour = (EditText) monitortimeLayout.findViewById(R.id.et_endTime_hour);
-        final EditText et_endTime_minute = (EditText) monitortimeLayout.findViewById(R.id.et_endTime_minute);
+        EditText[] ets = new EditText[8];
+        int[] numbers = new int[8];
+        ets[0] = (EditText) monitortimeLayout.findViewById(R.id.et_beginTime_hour0);
+        ets[1] = (EditText) monitortimeLayout.findViewById(R.id.et_beginTime_hour1);
+        ets[2] = (EditText) monitortimeLayout.findViewById(R.id.et_beginTime_minute0);
+        ets[3] = (EditText) monitortimeLayout.findViewById(R.id.et_beginTime_minute1);
+        ets[4] = (EditText) monitortimeLayout.findViewById(R.id.et_endTime_hour0);
+        ets[5] = (EditText) monitortimeLayout.findViewById(R.id.et_endTime_hour1);
+        ets[6] = (EditText) monitortimeLayout.findViewById(R.id.et_endTime_minute0);
+        ets[7] = (EditText) monitortimeLayout.findViewById(R.id.et_endTime_minute1);
 
         //判断输入是否为空
-        if(TextUtils.isEmpty(et_beginTime_hour.getText()) || TextUtils.isEmpty(et_beginTime_minute.getText()) ||
-                TextUtils.isEmpty(et_endTime_hour.getText()) || TextUtils.isEmpty(et_endTime_minute.getText())) {
-            Toast.makeText(context, "输入不可以为空！", Toast.LENGTH_SHORT).show();
-            Log.d("TAG", "输入不可以为空");
-            return null;
+        for(int i=0; i<ets.length; i++) {
+            if(TextUtils.isEmpty(ets[i].getText())) {
+                return null;
+            }
+            numbers[i] = Integer.parseInt(ets[i].getText().toString().trim());
+            Log.d("TAG","for i numbers[i] = " + numbers[i]);
         }
 
-        int beginHour = Integer.parseInt(et_beginTime_hour.getText().toString().trim());
-        int beginMinute = Integer.parseInt(et_beginTime_minute.getText().toString().trim());
-        int endHour = Integer.parseInt(et_endTime_hour.getText().toString().trim());
-        int endMinute = Integer.parseInt(et_endTime_minute.getText().toString().trim());
+        int beginHour = numbers[0] * 10 + numbers[1];
+        int beginMinute = numbers[2] * 10 + numbers[3];
+        int endHour = numbers[4] * 10 + numbers[5];
+        int endMinute = numbers[6] * 10 + numbers[7];
 
         return new MonitorTime(beginHour, beginMinute, endHour, endMinute);
     }

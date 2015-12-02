@@ -50,8 +50,10 @@ public class ExitApplication extends Application {
     /**
      * 遍历所有Activity并finish
      * */
-    public void exit(Context context,Television television) {
-        updateOnOrOff(context,television);
+    public void exit(Context context,Television television,int flags) {
+        if(flags == 0) {
+            updateOnOrOff(context, television);
+        }
         for(Activity activity:list) {
             activity.finish();
         }

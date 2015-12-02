@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.support.v17.leanback.animation.LogDecelerateInterpolator;
+import android.text.InputType;
 import android.text.LoginFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -124,7 +125,7 @@ public class MainActivity extends Activity {
             switch (msg.what) {
                 //引导等待结束
                 case StaticFinal.LEADDING_TIME:
-                    FirstOpen.isFirstOpen(MainActivity.this,mHandler);
+                    FirstOpen.isFirstOpen(MainActivity.this, mHandler);
                     //setContentView(R.layout.activity_unbounded);
                     break;
                 //异常消息处理
@@ -144,7 +145,7 @@ public class MainActivity extends Activity {
                     //显示已绑定界面
                     setContentView(R.layout.activity_bounded);
                     //如果首次启动，提醒设置监控时间段
-                    if(mIsUnbound) {
+                    if (mIsUnbound) {
                         setMonitorTime();
                         mIsUnbound = false;
                     }
@@ -185,6 +186,7 @@ public class MainActivity extends Activity {
      */
     private void checkPassword(final int flag) {
         final EditText inputServer = new EditText(MainActivity.this);
+        inputServer.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         inputServer.setFocusable(true);
         //弹出验证密码对话框
         final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -215,7 +217,7 @@ public class MainActivity extends Activity {
                                     Intent intent = new Intent(MainActivity.this, AutoMonitorService.class);
                                     stopService(intent);
                                     //关闭所有Activity
-                                    ExitApplication.getInstance().exit(MainActivity.this,mTelevision);
+                                    ExitApplication.getInstance().exit(MainActivity.this, mTelevision,0);
                                     break;
                                 //设置监控时间段
                                 case StaticFinal.GOTO_SETTING:
@@ -330,8 +332,8 @@ public class MainActivity extends Activity {
                     mTelevision = list.get(0);
                     mUser = mTelevision.getUserId();
                     initRealTimeRecord();
-                }else{
-                    Log.d("TAG","TV list is empty");
+                } else {
+                    Log.d("TAG", "TV list is empty");
                 }
             }
 
@@ -396,7 +398,9 @@ public class MainActivity extends Activity {
         super.onDestroy();
         if (mIsBind)
             unbindService(mServiceConnection);
-        }{
+    }
+
+    {
         TVListenerUtils.stopListen();
     }
 
@@ -406,21 +410,21 @@ public class MainActivity extends Activity {
      */
     private void setMonitorTime() {
         //判读是否第一次启动
-            //弹框提示设置监控时间段
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this).setTitle("是否去设置监控时间段？").
-                    setNegativeButton("跳过", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Log.d("TAG","这里应该去跳转");
-                    //跳转到设置监控时间段页面
-                    Intent intent2 = new Intent();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("televisionId", mTelevision.getObjectId());
-                    intent2.putExtras(bundle);
-                    intent2.setClass(MainActivity.this, SettingActivity.class);
-                    startActivity(intent2);
-                }
-            });
+        //弹框提示设置监控时间段
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this).setTitle("是否去设置监控时间段？").
+                setNegativeButton("跳过", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.d("TAG", "这里应该去跳转");
+                //跳转到设置监控时间段页面
+                Intent intent2 = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putString("televisionId", mTelevision.getObjectId());
+                intent2.putExtras(bundle);
+                intent2.setClass(MainActivity.this, SettingActivity.class);
+                startActivity(intent2);
+            }
+        });
         builder.show();
     }
 

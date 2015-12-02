@@ -181,7 +181,7 @@ public final class SystemDataUtils {
      */
     public boolean isTimeNmow(Television television) {
         ArrayList<MonitorTime> monitorTimeList = television.getMonitorTime();
-        if (monitorTimeList == null) {
+        if (monitorTimeList == null||monitorTimeList.size() == 0) {
             return true;
         }
         Calendar nowTime = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));

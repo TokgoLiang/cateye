@@ -166,6 +166,7 @@ public class AutoRunService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d("cateye","run service on destroy");
         findTelevision();
         return super.onStartCommand(intent, flags, startId);
     }

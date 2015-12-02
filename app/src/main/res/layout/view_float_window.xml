@@ -3,19 +3,24 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:background="@drawable/qrcode">
+              android:background="@drawable/bg_float_window">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="WTFFFFFFFFFFFF"
         android:id="@+id/tv_window_message"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"/>
 
     <Button
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="GET IT"
-        android:id="@+id/bt_ok"/>
+        android:id="@+id/bt_ok"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>

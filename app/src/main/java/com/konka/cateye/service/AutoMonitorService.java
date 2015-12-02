@@ -209,7 +209,7 @@ public class AutoMonitorService extends Service {
         mLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
         mLayoutParams.format = PixelFormat.RGBA_8888;
         mLayoutParams.gravity = Gravity.END | Gravity.BOTTOM;
-        mLayoutParams.width = 250;
+        mLayoutParams.width = 350;
         mLayoutParams.height = 200;
         Log.e("cateye", "windowManager:" + mWindowManager);
         mFloatWindowLayout = new FloatWindowLayout(this);

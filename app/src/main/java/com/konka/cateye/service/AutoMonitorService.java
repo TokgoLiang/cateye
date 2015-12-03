@@ -54,7 +54,6 @@ public class AutoMonitorService extends Service {
     private WindowManager.LayoutParams mLayoutParams = null;
 
     private ServiceHandler mServiceHandler = null;
-    private MainActivity.MainActivityHandler mActivityHandler = null;
     private ExecutorService mExecutorService = null;
     private SystemDataUtils mSystemDataUtils = null;
     private ServerDatabaseUtils mServerDatabaseUtils = null;
@@ -68,11 +67,10 @@ public class AutoMonitorService extends Service {
     public class AutoMonitorBinder extends Binder {
         //初始化Service各个对象，并开始各种监控
         public void setDataAndStartMonitor(Television television, RealTimeRecord realTimeRecord,
-                                           RealTimeMessage realTimeMessage, MainActivity.MainActivityHandler handler) {
+                                           RealTimeMessage realTimeMessage) {
             mTelevision = television;
             mRealTimeRecord = realTimeRecord;
             mRealTimeMessage = realTimeMessage;
-            mActivityHandler = handler;
 
             mIsRunning = true;
             mExecutorService.submit(new AutoMonitorThread());
@@ -103,9 +101,6 @@ public class AutoMonitorService extends Service {
             switch (msg.what) {
                 case UPDATE_TELEVISION_FAILURE:
                     mTelevision.setMonitorTime(mOldMonitorTime);//网络通信失败则恢复原有监控时间
-                    Message message = new Message();
-                    message.what = StaticFinal.INTERNET_ERROR;
-                    mActivityHandler.sendMessage(message);
                     break;
                 case UPDATE_REAL_TIME_RECORD_SUCCESS://恢复监听，下同
                     mRealTimeRecordListener.subRowUpdate("RealTimeRecord", mRealTimeRecord.getObjectId());

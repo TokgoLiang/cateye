@@ -129,9 +129,9 @@ public class MainActivity extends Activity {
                     //setContentView(R.layout.activity_unbounded);
                     break;
                 //异常消息处理
-                case StaticFinal.INTERNET_ERROR:
-                    Toast.makeText(MainActivity.this, "网络连接失败，请检查网络", Toast.LENGTH_LONG).show();
-                    break;
+//                case StaticFinal.INTERNET_ERROR:
+//                    Toast.makeText(MainActivity.this, "网络连接失败，请检查网络", Toast.LENGTH_LONG).show();
+//                    break;
                 //处理绑定
                 case StaticFinal.BOUND:
                     //启动对TV表的监听
@@ -297,7 +297,7 @@ public class MainActivity extends Activity {
             mBinder = (AutoMonitorService.AutoMonitorBinder) service;
             if (!mBinder.isRunning()) {
                 //设置service里的数据，使service正式开始工作
-                mBinder.setDataAndStartMonitor(mTelevision, mRealTimeRecord, mRealTimeMessage, mHandler);
+                mBinder.setDataAndStartMonitor(mTelevision, mRealTimeRecord, mRealTimeMessage);
                 mIsBind = true;
             }
         }

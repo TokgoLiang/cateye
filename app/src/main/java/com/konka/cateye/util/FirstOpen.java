@@ -36,6 +36,8 @@ import cn.bmob.v3.listener.UpdateListener;
  */
 public class FirstOpen {
 
+    public static boolean isPhoneCall = false;
+
     /**
      * 判断是否第一次启动
      * 从数据库判断
@@ -90,6 +92,11 @@ public class FirstOpen {
     }
 
     private static void updateOnOrOff(final Context context,Television television){
+        if(isPhoneCall){
+            isPhoneCall = false;
+            return;
+        }
+
         BmobQuery<OnOrOff> query = new BmobQuery<>();
         query.addWhereEqualTo("televisionId", television);
         query.findObjects(context, new FindListener<OnOrOff>() {
@@ -162,10 +169,7 @@ public class FirstOpen {
                     @Override
                     public void onSuccess() {
                         Log.d("TAG", "message and record  save success");
-                        Message msg = new Message();
-                        msg.what = StaticFinal.UNBOUNDED;
-                        handler.sendMessage(msg);
-                        createOnOrOffTable(context,television);
+                        createOnOrOffTable(context,television,handler);
                     }
 
                     @Override
@@ -183,7 +187,7 @@ public class FirstOpen {
     }
 
 
-    private static void createOnOrOffTable(final Context context, final Television television){
+    private static void createOnOrOffTable(final Context context, final Television television,final Handler handler){
         OnOrOff onOrOff = new OnOrOff();
         onOrOff.setTelevisionId(television);
         onOrOff.setState(true);
@@ -191,8 +195,11 @@ public class FirstOpen {
         onOrOff.save(context, new SaveListener() {
             @Override
             public void onSuccess() {
-                Intent intent = new Intent(context,AutoRunService.class);
-                context.startService(intent);
+//                Intent intent = new Intent(context,AutoRunService.class);
+//                context.startService(intent);
+                Message msg = new Message();
+                msg.what = StaticFinal.UNBOUNDED;
+                handler.sendMessage(msg);
                 Log.d("TAG", "on or off save success");
             }
 

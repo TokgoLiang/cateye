@@ -95,23 +95,7 @@ public class AutoRunService extends Service implements Runnable {
             public void onSuccess(List<OnOrOff> list) {
                 mOnOrOff = list.get(0);
                 Log.d("cateye", "OOO is:" + mOnOrOff.getObjectId());
-                if (mOnOrOff.getState()) {
-                    mOnOrOff.setState(false);
-                    mOnOrOff.update(AutoRunService.this, new UpdateListener() {
-                        @Override
-                        public void onSuccess() {
-                            Log.d("cateye", "恢复ooo");
-                            listen();
-                        }
-
-                        @Override
-                        public void onFailure(int i, String s) {
-
-                        }
-                    });
-                } else {
-                    listen();
-                }
+                listen();
             }
 
             @Override
@@ -139,6 +123,7 @@ public class AutoRunService extends Service implements Runnable {
                 try {
                     JSONObject data = jsonObject.getJSONObject("data");
                     mOnOrOff.setState(data.getBoolean("state"));
+                    mOnOrOff.setIsRequest(data.getBoolean("isRequest"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -220,9 +205,17 @@ public class AutoRunService extends Service implements Runnable {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("cateye", "run service on start");
+//        findTelevision();
+//        mExecutorService = Executors.newCachedThreadPool();
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.d("cateye", "run service on create");
         findTelevision();
         mExecutorService = Executors.newCachedThreadPool();
-        return super.onStartCommand(intent, flags, startId);
     }
 
     @Override

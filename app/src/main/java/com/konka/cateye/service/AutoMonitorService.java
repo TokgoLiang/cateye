@@ -222,11 +222,21 @@ public class AutoMonitorService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e("cateye", "monitor service start");
+//        mSystemDataUtils = new SystemDataUtils(this);
+//        mServiceHandler = new ServiceHandler();
+//        mServerDatabaseUtils = new ServerDatabaseUtils(this, mServiceHandler);
+//        mExecutorService = Executors.newCachedThreadPool();
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.e("cateye", "monitor service create");
         mSystemDataUtils = new SystemDataUtils(this);
         mServiceHandler = new ServiceHandler();
         mServerDatabaseUtils = new ServerDatabaseUtils(this, mServiceHandler);
         mExecutorService = Executors.newCachedThreadPool();
-        return super.onStartCommand(intent, flags, startId);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.konka.cateye.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -17,6 +18,8 @@ import com.konka.cateye.bean.RealTimeMessage;
 import com.konka.cateye.bean.RealTimeRecord;
 import com.konka.cateye.bean.Television;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import cn.bmob.v3.datatype.BmobFile;
@@ -74,10 +77,27 @@ public class ServerDatabaseUtils {
             @Override
             public void onPictureTaken(Bitmap bitmap) {
                 if (bitmap == null) Log.e("cateye", "screenShot is null");
-                String imagePath = mSystemDataUtils.saveScreenShot(bitmap);
+                Bitmap compressBitMap = compressImage(bitmap);
+                String imagePath = mSystemDataUtils.saveScreenShot(compressBitMap);
                 uploadScreenShot(realTimeRecord, imagePath);
             }
         }, KKCommonManager.EN_KK_CAPTURE_MODE.CURRENT_ALL);
+    }
+
+
+    private Bitmap compressImage(Bitmap image) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 80, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+        int options = 80;
+        while ( baos.toByteArray().length / 1024>100) {    //循环判断如果压缩后图片是否大于100kb,大于继续压缩
+            baos.reset();//重置baos即清空baos
+            options -= 10;//每次都减少10
+            image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中
+
+        }
+        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中
+        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片
+        return bitmap;
     }
 
     /**
@@ -160,7 +180,8 @@ public class ServerDatabaseUtils {
             @Override
             public void onPictureTaken(Bitmap bitmap) {
                 if (bitmap == null) Log.e("cateye", "screenShot is null");
-                String imagePath = mSystemDataUtils.saveScreenShot(bitmap);
+                Bitmap compressBitMap = compressImage(bitmap);
+                String imagePath = mSystemDataUtils.saveScreenShot(compressBitMap);
                 uploadScreenShot(historyRecord, imagePath);
             }
         }, KKCommonManager.EN_KK_CAPTURE_MODE.CURRENT_ALL);

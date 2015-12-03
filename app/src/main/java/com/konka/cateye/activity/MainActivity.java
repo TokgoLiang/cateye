@@ -139,6 +139,8 @@ public class MainActivity extends Activity {
                     break;
                 //已绑定状态
                 case StaticFinal.BOUNDED:
+                    Intent intent = new Intent(MainActivity.this,AutoRunService.class);
+                    startService(intent);
                     //开启监控
                     initTelevision();
                     TVListenerUtils.stopListen();

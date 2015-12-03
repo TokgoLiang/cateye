@@ -169,10 +169,7 @@ public class FirstOpen {
                     @Override
                     public void onSuccess() {
                         Log.d("TAG", "message and record  save success");
-                        Message msg = new Message();
-                        msg.what = StaticFinal.UNBOUNDED;
-                        handler.sendMessage(msg);
-                        createOnOrOffTable(context,television);
+                        createOnOrOffTable(context,television,handler);
                     }
 
                     @Override
@@ -190,7 +187,7 @@ public class FirstOpen {
     }
 
 
-    private static void createOnOrOffTable(final Context context, final Television television){
+    private static void createOnOrOffTable(final Context context, final Television television,final Handler handler){
         OnOrOff onOrOff = new OnOrOff();
         onOrOff.setTelevisionId(television);
         onOrOff.setState(true);
@@ -198,8 +195,11 @@ public class FirstOpen {
         onOrOff.save(context, new SaveListener() {
             @Override
             public void onSuccess() {
-                Intent intent = new Intent(context,AutoRunService.class);
-                context.startService(intent);
+//                Intent intent = new Intent(context,AutoRunService.class);
+//                context.startService(intent);
+                Message msg = new Message();
+                msg.what = StaticFinal.UNBOUNDED;
+                handler.sendMessage(msg);
                 Log.d("TAG", "on or off save success");
             }
 

@@ -89,7 +89,7 @@ public final class SystemDataUtils {
         try {
             File imageFile = new File(mContext.getCacheDir().getAbsolutePath(), fileName);
             FileOutputStream fos = new FileOutputStream(imageFile);
-            image.compress(Bitmap.CompressFormat.PNG, 90, fos);
+            image.compress(Bitmap.CompressFormat.JPEG, 90, fos);
             fos.flush();
             fos.close();
         } catch (IOException e) {

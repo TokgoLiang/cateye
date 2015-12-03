@@ -54,7 +54,7 @@
         </receiver> <!-- 消息推送服务 -->
 
         <service
-            android:name=".service.AutoRunService"
+                android:name=".service.AutoRunService"
             android:enabled="true"
             android:exported="true" >
         </service>
